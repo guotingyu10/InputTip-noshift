@@ -22,3 +22,4 @@
 */
 
 #Include EnglishInputOptimization.ahk
+#Include TextCursorIndicator.ahk
