@@ -1,4 +1,4 @@
-﻿; InputTip
+; InputTip
 
 /*
 
@@ -20,3 +20,5 @@
     - Gitee: https://gitee.com/abgox/InputTip#自定义功能
 
 */
+
+#Include EnglishInputOptimization.ahk
