@@ -12,7 +12,11 @@ global TCI_Enabled := true
 TCI_Init()
 
 TCI_Init() {
-    global TCI_Gui
+    global TCI_Gui, TCI_Enabled
+    
+    ; 读取配置
+    TCI_Enabled := readIni("TextCursorIndicator_Enable", 1, "TextCursorIndicator")
+    
     ; 创建指示器 GUI
     try {
         ; 使用 createGuiOpt 保持一致性，如果不可用则回退
@@ -24,23 +28,26 @@ TCI_Init() {
     TCI_Gui.BackColor := TCI_Color
     TCI_Gui.Show("NA NoActivate w2 h20 x-100 y-100") ; 初始隐藏在屏幕外
     
-    ; 启动定时器更新位置和颜色
-    SetTimer(TCI_Update, 50)
-}
+    ; 注册托盘菜单
+    try {
+        A_TrayMenu.Add()
+        A_TrayMenu.Add("文本光标指示器配置", TCI_ShowConfigGui)
+    }
 
-; 开关快捷键 Ctrl+Shift+F11
-^+F11:: {
-    global TCI_Enabled, TCI_Gui
-    TCI_Enabled := !TCI_Enabled
+    ; 启动定时器更新位置和颜色
     if (TCI_Enabled) {
         SetTimer(TCI_Update, 50)
-        ToolTip("文本光标指示器已开启")
-        SetTimer(() => ToolTip(), -2000)
-    } else {
-        SetTimer(TCI_Update, 0) ; 关闭定时器
-        TCI_Gui.Move(-100, -100) ; 隐藏 GUI
-        ToolTip("文本光标指示器已关闭")
-        SetTimer(() => ToolTip(), -2000)
+    }
+}
+
+TCI_ShowConfigGui(*) {
+    try {
+        if (FileExist("InputTip.ini")) {
+            Run("InputTip.ini")
+            MsgBox("请在打开的配置文件中找到 [TextCursorIndicator] 部分进行修改。`n修改完成后保存文件，重启软件生效。", "配置说明", "Iconi")
+        } else {
+            MsgBox("配置文件 InputTip.ini 不存在", "错误", "Icon!")
+        }
     }
 }
 

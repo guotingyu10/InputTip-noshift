@@ -23,3 +23,4 @@
 
 #Include EnglishInputOptimization.ahk
 #Include TextCursorIndicator.ahk
+#Include CopyTip.ahk
