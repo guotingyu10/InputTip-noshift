@@ -56,13 +56,17 @@ class CopyTip {
             text := A_Clipboard
             if (text == "")
                 return
+
+            ; Calculate count excluding digits
+            textNoDigits := RegExReplace(text, "\d", "")
+            count := StrLen(textNoDigits)
                 
             ; Get first line
             firstLine := StrSplit(text, ["`r`n", "`r", "`n"])[1]
             if (StrLen(firstLine) > 50)
                 firstLine := SubStr(firstLine, 1, 50) "..."
                 
-            this.ShowTip("复制: '" firstLine "'")
+            this.ShowTip("复制: '" firstLine "' (" count "个字)")
         }
     }
     
