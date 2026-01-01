@@ -1,3 +1,4 @@
+添加复制提示
 <h1 align="center">✨<a href="https://inputtip.abgox.com">InputTip</a>✨</h1>
 
 <p align="center">
